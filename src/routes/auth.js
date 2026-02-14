@@ -7,7 +7,7 @@ const { validationSignUpData } = require("../utils/validation");
 authRouter.post("/signup", async (req, res) => {
   try {
     validationSignUpData(req);
-    const { firstName, lastName, emailId, password } = req.body;
+    const { firstName, lastName, emailId, password,photoUrl } = req.body;
 
     // hashing password
 
@@ -17,6 +17,7 @@ authRouter.post("/signup", async (req, res) => {
       firstName,
       lastName,
       emailId,
+      photoUrl,
       password: hashedPassword,
     });
     await user.save();
