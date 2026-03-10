@@ -3,7 +3,7 @@ const Admin = require("./middleware/auth.middleware");
 const app = express();
 const connectDB = require("./config/db");
 
-const bcrypt = require("bcrypt");
+const cors = require("cors");
 const cookieParser = require("cookie-parser");
 
 const profileRouter = require("./routes/profile");
@@ -11,6 +11,12 @@ const authRouter = require("./routes/auth");
 const requestRouter = require("./routes/request");
 const userRouter = require("./routes/userRouter");
 
+app.use(
+  cors({
+    origin: "http://localhost:5173/", // it ask for frontend url
+    credentials: true, // it means mai https pe nhi hun uske badd bhi cookies set kr skta hun
+  }),
+);
 app.use(express.json());
 app.use(cookieParser());
 
@@ -18,6 +24,7 @@ app.use("/", authRouter);
 app.use("/", profileRouter);
 app.use("/", requestRouter);
 app.use("/", userRouter);
+// now only looged in user can acess this api.
 
 connectDB()
   .then(() => {
